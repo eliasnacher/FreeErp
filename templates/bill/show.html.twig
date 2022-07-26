@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Bill{% endblock %}
+
+{% block body %}
+    <h1>Bill</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ bill.id }}</td>
+            </tr>
+            <tr>
+                <th>Base</th>
+                <td>{{ bill.base }}</td>
+            </tr>
+            <tr>
+                <th>Tax</th>
+                <td>{{ bill.tax }}</td>
+            </tr>
+            <tr>
+                <th>Number</th>
+                <td>{{ bill.number }}</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ bill.description }}</td>
+            </tr>
+            <tr>
+                <th>CreatedAt</th>
+                <td>{{ bill.createdAt ? bill.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>UpdatedAt</th>
+                <td>{{ bill.updatedAt ? bill.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>PayAt</th>
+                <td>{{ bill.payAt ? bill.payAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_bill_index') }}">back to list</a>
+
+    <a href="{{ path('app_bill_edit', {'id': bill.id}) }}">edit</a>
+
+    {{ include('bill/_delete_form.html.twig') }}
+{% endblock %}
