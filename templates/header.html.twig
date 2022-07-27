@@ -1,0 +1,93 @@
+{% block header %}
+    <style>
+        header {
+            position:fixed;
+            top:0px;
+            left:0px;
+            right:0px;
+            height:40px;
+            background: rgb(197,255,226);
+            background: linear-gradient(180deg, rgba(197,255,226,1) 95%, rgba(66,184,131,1) 98%, rgba(100,100,100,1) 100%);
+            display:flex;
+            justify-content: space-between;
+        }
+
+        header nav {
+            display:flex;
+        }
+
+        header nav a {
+            text-decoration:none;
+        }
+
+        .header-separator {
+            height:40px;
+            width:100%;
+        }
+
+        .header-link {
+            margin:5px;
+            border: solid 1px rgba(150,150,150,1);
+            border-radius: 5px;
+            padding:5px 10px;
+            background: rgb(197,255,226);
+            background: linear-gradient(180deg, rgba(197,255,226,1) 0%, rgb(135, 218, 180) 98%, rgba(100,100,100,1) 100%);
+            color:#333;
+        }
+
+        .header-nav-link:hover {
+            background: linear-gradient(180deg, rgb(163, 255, 209) 0%, rgb(90, 216, 159) 98%, rgba(100,100,100,1) 100%);
+        }
+
+        .header-userbox-username {
+            margin:10px;
+        }
+
+        .header-userbox {
+            display:flex;
+        }
+    </style>
+    <header>
+        <nav>
+            <a href="/">
+                <div class="header-link">
+                    Home
+                </div>
+            </a>
+            <a href="/user">
+                <div class="header-link">
+                    User
+                </div>
+            </a>
+            <a href="/client">
+                <div class="header-link">
+                    Client
+                </div>
+            </a>
+            <a href="/bill">
+                <div class="header-link">
+                    Bill
+                </div>
+            </a>
+        </nav>
+        <div class="header-userbox">
+            {% if app.user != null %}
+            <span class="header-userbox-username">
+                {{ app.user.username }}
+            </span>
+            <a href="/logout">
+                <div class="header-link">
+                    Logout
+                </div>
+            </a>
+            {% else %}
+            <a href="/login">
+                <div class="header-link">
+                    Login
+                </div>
+            </a>
+            {% endif %}
+        </div>
+    </header>
+    <div class="header-separator"></div>
+{% endblock %}

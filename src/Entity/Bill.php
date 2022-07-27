@@ -2,9 +2,10 @@
 
 namespace App\Entity;
 
-use App\Repository\BillRepository;
+use App\Entity\Client;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\BillRepository;
 
 #[ORM\Entity(repositoryClass: BillRepository::class)]
 class Bill
@@ -28,7 +29,7 @@ class Bill
 
     #[ORM\ManyToOne(inversedBy: 'bills')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?client $client = null;
+    private ?Client $client = null;
 
     #[ORM\Column]
     private ?\DateTimeImmutable $createdAt = null;
@@ -92,12 +93,12 @@ class Bill
         return $this;
     }
 
-    public function getClient(): ?client
+    public function getClient(): ?Client
     {
         return $this->client;
     }
 
-    public function setClient(?client $client): self
+    public function setClient(?Client $client): self
     {
         $this->client = $client;
 
