@@ -8,6 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 use App\Repository\BillRepository;
 
 #[ORM\Entity(repositoryClass: BillRepository::class)]
+#[ORM\HasLifecycleCallbacks()]
 class Bill
 {
     #[ORM\Id]
@@ -24,7 +25,7 @@ class Bill
     #[ORM\Column(length: 255)]
     private ?string $number = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(type: Types::TEXT, length: 1024)]
     private ?string $description = null;
 
     #[ORM\ManyToOne(inversedBy: 'bills')]
@@ -34,11 +35,11 @@ class Bill
     #[ORM\Column]
     private ?\DateTimeImmutable $createdAt = null;
 
-    #[ORM\Column]
+    #[ORM\Column(nullable: true)]
     private ?\DateTimeImmutable $updatedAt = null;
 
     #[ORM\Column]
-    private ?\DateTimeImmutable $payAt = null;
+    private ?\DateTime $payAt = null;
 
     public function getId(): ?int
     {
@@ -129,15 +130,27 @@ class Bill
         return $this;
     }
 
-    public function getPayAt(): ?\DateTimeImmutable
+    public function getPayAt(): ?\DateTime
     {
         return $this->payAt;
     }
 
-    public function setPayAt(\DateTimeImmutable $payAt): self
+    public function setPayAt(\DateTime $payAt): self
     {
         $this->payAt = $payAt;
 
         return $this;
+    }
+
+    #[ORM\PrePersist]
+    public function setCreatedAtValue(): void
+    {
+        $this->setCreatedAt(new \DateTimeImmutable());
+    }
+
+    #[ORM\PreUpdate]
+    public function setUpdatedAtValue(): void
+    {
+        $this->setUpdatedAt(new \DateTimeImmutable());
     }
 }
