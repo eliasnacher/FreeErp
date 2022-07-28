@@ -1,4 +1,27 @@
 {{ form_start(form) }}
-    {{ form_widget(form) }}
+    <div>
+        <span>Client</span>
+        {{ form_widget(form.client, { 'attr' : {'class' : 'bg-input'} }) }}
+    </div>
+    <div>
+        <span>Base</span>
+        {{ form_widget(form.base, { 'type': 'number', 'attr' : {'class' : 'bg-input', 'style' : 'width:100px'} }) }}
+    </div>
+    <div>
+        <span>Tax</span>
+        {{ form_widget(form.tax, { 'type': 'number', 'attr' : {'class' : 'bg-input', 'style' : 'width:50px'} }) }}
+    </div>
+    <div>
+        <span>Number</span>
+        {{ form_widget(form.number, {'attr' : {'class' : 'bg-input'} }) }}
+    </div>
+    <div>
+        <span>Description</span>
+        {{ form_widget(form.description, {'attr' : {'class' : 'bg-input'} }) }}
+    </div>
+    <div>
+        <span>PayAt</span>
+        {{ form_widget(form.payAt, { 'attr' : {'class' : 'bg-input'} }) }}
+    </div>
     <button class="btn">{{ button_label|default('Save') }}</button>
 {{ form_end(form) }}
