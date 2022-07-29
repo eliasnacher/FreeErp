@@ -3,25 +3,11 @@
 namespace App\Test\Controller;
 
 use App\Entity\User;
-use App\Repository\UserRepository;
-use Symfony\Bundle\FrameworkBundle\KernelBrowser;
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use App\Test\AbstractWebTest;
 
-class UserControllerTest extends WebTestCase
+class UserControllerTest extends AbstractWebTest
 {
-    private KernelBrowser $client;
-    private UserRepository $repository;
     private string $path = '/user/';
-
-    protected function setUp(): void
-    {
-        $this->client = static::createClient();
-        $this->repository = (static::getContainer()->get('doctrine'))->getRepository(User::class);
-
-        foreach ($this->repository->findAll() as $object) {
-            $this->repository->remove($object, true);
-        }
-    }
 
     public function testIndex(): void
     {
@@ -36,33 +22,29 @@ class UserControllerTest extends WebTestCase
 
     public function testNew(): void
     {
-        $originalNumObjectsInRepository = count($this->repository->findAll());
+        $originalNumObjectsInRepository = count($this->userRepository->findAll());
 
-        $this->markTestIncomplete();
         $this->client->request('GET', sprintf('%snew', $this->path));
 
         self::assertResponseStatusCodeSame(200);
 
         $this->client->submitForm('Save', [
-            'user[username]' => 'Testing',
-            'user[roles]' => 'Testing',
-            'user[password]' => 'Testing',
+            'user[username]' => 'testNew',
+            'user[password]' => hash('sha256', 'testNew'),
         ]);
 
         self::assertResponseRedirects('/user/');
 
-        self::assertSame($originalNumObjectsInRepository + 1, count($this->repository->findAll()));
+        self::assertSame($originalNumObjectsInRepository + 1, count($this->userRepository->findAll()));
     }
 
     public function testShow(): void
     {
-        $this->markTestIncomplete();
         $fixture = new User();
-        $fixture->setUsername('My Title');
-        $fixture->setRoles('My Title');
-        $fixture->setPassword('My Title');
+        $fixture->setUsername('testShow');
+        $fixture->setPassword(hash('sha256', 'testShow'));
 
-        $this->repository->add($fixture, true);
+        $this->userRepository->add($fixture, true);
 
         $this->client->request('GET', sprintf('%s%s', $this->path, $fixture->getId()));
 
@@ -74,50 +56,43 @@ class UserControllerTest extends WebTestCase
 
     public function testEdit(): void
     {
-        $this->markTestIncomplete();
         $fixture = new User();
-        $fixture->setUsername('My Title');
-        $fixture->setRoles('My Title');
-        $fixture->setPassword('My Title');
+        $fixture->setUsername('testEdit');
+        $fixture->setPassword(hash('sha256', 'testEdit'));
 
-        $this->repository->add($fixture, true);
+        $this->userRepository->add($fixture, true);
 
         $this->client->request('GET', sprintf('%s%s/edit', $this->path, $fixture->getId()));
 
         $this->client->submitForm('Update', [
-            'user[username]' => 'Something New',
-            'user[roles]' => 'Something New',
-            'user[password]' => 'Something New',
+            'user[username]' => 'editedTestEdit',
+            'user[password]' => hash('sha256', 'editedTestEdit'),
         ]);
 
         self::assertResponseRedirects('/user/');
 
-        $fixture = $this->repository->findAll();
+        $fixture = $this->userRepository->findAll();
 
-        self::assertSame('Something New', $fixture[0]->getUsername());
-        self::assertSame('Something New', $fixture[0]->getRoles());
-        self::assertSame('Something New', $fixture[0]->getPassword());
+        self::assertSame('editedTestEdit', $fixture[0]->getUsername());
+        self::assertSame(hash('sha256', 'editedTestEdit'), $fixture[0]->getPassword());
     }
 
     public function testRemove(): void
     {
-        $this->markTestIncomplete();
-
-        $originalNumObjectsInRepository = count($this->repository->findAll());
+        $originalNumObjectsInRepository = count($this->userRepository->findAll());
 
         $fixture = new User();
-        $fixture->setUsername('My Title');
-        $fixture->setRoles('My Title');
-        $fixture->setPassword('My Title');
+        $fixture->setUsername('testRemove');
+        $fixture->setPassword(hash('sha256', 'testNew'));
 
-        $this->repository->add($fixture, true);
+        $this->userRepository->add($fixture, true);
 
-        self::assertSame($originalNumObjectsInRepository + 1, count($this->repository->findAll()));
+        self::assertSame($originalNumObjectsInRepository + 1, count($this->userRepository->findAll()));
 
         $this->client->request('GET', sprintf('%s%s', $this->path, $fixture->getId()));
         $this->client->submitForm('Delete');
 
-        self::assertSame($originalNumObjectsInRepository, count($this->repository->findAll()));
+        self::assertSame($originalNumObjectsInRepository, count($this->userRepository->findAll()));
         self::assertResponseRedirects('/user/');
     }
 }

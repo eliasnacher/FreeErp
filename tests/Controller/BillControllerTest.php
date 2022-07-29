@@ -24,7 +24,7 @@ class BillControllerTest extends AbstractWebTest
     {
         $originalNumObjectsInRepository = count($this->billRepository->findAll());
 
-        $this->createDummyClient('testNew Client', 'testNew@client.local');
+        $this->createDummyClient('testNew Client', 'testnew@client.local');
 
         $this->client->request('GET', sprintf('%snew', $this->path));
 

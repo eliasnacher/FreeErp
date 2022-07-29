@@ -3,25 +3,11 @@
 namespace App\Test\Controller;
 
 use App\Entity\Client;
-use App\Repository\ClientRepository;
-use Symfony\Bundle\FrameworkBundle\KernelBrowser;
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use App\Test\AbstractWebTest;
 
-class ClientControllerTest extends WebTestCase
+class ClientControllerTest extends AbstractWebTest
 {
-    private KernelBrowser $client;
-    private ClientRepository $repository;
     private string $path = '/client/';
-
-    protected function setUp(): void
-    {
-        $this->client = static::createClient();
-        $this->repository = (static::getContainer()->get('doctrine'))->getRepository(Client::class);
-
-        foreach ($this->repository->findAll() as $object) {
-            $this->repository->remove($object, true);
-        }
-    }
 
     public function testIndex(): void
     {
@@ -36,35 +22,29 @@ class ClientControllerTest extends WebTestCase
 
     public function testNew(): void
     {
-        $originalNumObjectsInRepository = count($this->repository->findAll());
+        $originalNumObjectsInRepository = count($this->clientRepository->findAll());
 
-        $this->markTestIncomplete();
         $this->client->request('GET', sprintf('%snew', $this->path));
 
         self::assertResponseStatusCodeSame(200);
 
         $this->client->submitForm('Save', [
-            'client[name]' => 'Testing',
-            'client[email]' => 'Testing',
-            'client[createdAt]' => 'Testing',
-            'client[updatedAt]' => 'Testing',
+            'client[name]' => 'testNew',
+            'client[email]' => 'testnew@client.local',
         ]);
 
         self::assertResponseRedirects('/client/');
 
-        self::assertSame($originalNumObjectsInRepository + 1, count($this->repository->findAll()));
+        self::assertSame($originalNumObjectsInRepository + 1, count($this->clientRepository->findAll()));
     }
 
     public function testShow(): void
     {
-        $this->markTestIncomplete();
         $fixture = new Client();
-        $fixture->setName('My Title');
-        $fixture->setEmail('My Title');
-        $fixture->setCreatedAt('My Title');
-        $fixture->setUpdatedAt('My Title');
+        $fixture->setName('testShow');
+        $fixture->setEmail('testshow@client.local');
 
-        $this->repository->add($fixture, true);
+        $this->clientRepository->add($fixture, true);
 
         $this->client->request('GET', sprintf('%s%s', $this->path, $fixture->getId()));
 
@@ -76,54 +56,43 @@ class ClientControllerTest extends WebTestCase
 
     public function testEdit(): void
     {
-        $this->markTestIncomplete();
         $fixture = new Client();
-        $fixture->setName('My Title');
-        $fixture->setEmail('My Title');
-        $fixture->setCreatedAt('My Title');
-        $fixture->setUpdatedAt('My Title');
+        $fixture->setName('testEdit');
+        $fixture->setEmail('testedit@client.local');
 
-        $this->repository->add($fixture, true);
+        $this->clientRepository->add($fixture, true);
 
         $this->client->request('GET', sprintf('%s%s/edit', $this->path, $fixture->getId()));
 
         $this->client->submitForm('Update', [
-            'client[name]' => 'Something New',
-            'client[email]' => 'Something New',
-            'client[createdAt]' => 'Something New',
-            'client[updatedAt]' => 'Something New',
+            'client[name]' => 'changedTestEdit',
+            'client[email]' => 'changedtestedit@client.local',
         ]);
 
         self::assertResponseRedirects('/client/');
 
-        $fixture = $this->repository->findAll();
+        $fixture = $this->clientRepository->findAll();
 
-        self::assertSame('Something New', $fixture[0]->getName());
-        self::assertSame('Something New', $fixture[0]->getEmail());
-        self::assertSame('Something New', $fixture[0]->getCreatedAt());
-        self::assertSame('Something New', $fixture[0]->getUpdatedAt());
+        self::assertSame('changedTestEdit', $fixture[0]->getName());
+        self::assertSame('changedtestedit@client.local', $fixture[0]->getEmail());
     }
 
     public function testRemove(): void
     {
-        $this->markTestIncomplete();
-
-        $originalNumObjectsInRepository = count($this->repository->findAll());
+        $originalNumObjectsInRepository = count($this->clientRepository->findAll());
 
         $fixture = new Client();
-        $fixture->setName('My Title');
-        $fixture->setEmail('My Title');
-        $fixture->setCreatedAt('My Title');
-        $fixture->setUpdatedAt('My Title');
+        $fixture->setName('testRemove');
+        $fixture->setEmail('testremove@client.local');
 
-        $this->repository->add($fixture, true);
+        $this->clientRepository->add($fixture, true);
 
-        self::assertSame($originalNumObjectsInRepository + 1, count($this->repository->findAll()));
+        self::assertSame($originalNumObjectsInRepository + 1, count($this->clientRepository->findAll()));
 
         $this->client->request('GET', sprintf('%s%s', $this->path, $fixture->getId()));
         $this->client->submitForm('Delete');
 
-        self::assertSame($originalNumObjectsInRepository, count($this->repository->findAll()));
+        self::assertSame($originalNumObjectsInRepository, count($this->clientRepository->findAll()));
         self::assertResponseRedirects('/client/');
     }
 }
