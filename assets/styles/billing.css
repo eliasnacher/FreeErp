@@ -1,5 +1,57 @@
+/** Light Theme **/
+.bc-light-theme {
+    --bc-font-1: #111;
+    --bc-font-2: #222;
+    --bc-font-3: #333;
+    --bc-font-4: #444;
+    --bc-font-5: #555;
+    --bc-font-6: #666;
+    --bc-font-7: #777;
+    --bc-font-8: #888;
+    --bc-font-9: #999;
+    --bc-bg-1: #FFF;
+    --bc-bg-2: #EEE;
+    --bc-bg-3: #DDD;
+    --bc-bg-4: #CCC;
+    --bc-bg-5: #BBB;
+    --bc-bg-6: #AAA;
+    --bc-bg-7: #999;
+    --bc-bg-8: #888;
+    --bc-bg-9: #777;
+}
+
+/** Dark Theme **/
+.bc-dark-theme {
+    --bc-font-1: #FFF;
+    --bc-font-2: #EEE;
+    --bc-font-3: #DDD;
+    --bc-font-4: #CCC;
+    --bc-font-5: #BBB;
+    --bc-font-6: #AAA;
+    --bc-font-7: #999;
+    --bc-font-8: #888;
+    --bc-font-9: #777;
+    --bc-bg-1: #111;
+    --bc-bg-2: #222;
+    --bc-bg-3: #333;
+    --bc-bg-4: #444;
+    --bc-bg-5: #555;
+    --bc-bg-6: #666;
+    --bc-bg-7: #777;
+    --bc-bg-8: #888;
+    --bc-bg-9: #999;
+}
+
+body {
+    background-color: var(--bc-bg-1);
+}
+* {
+    color: var(--bc-font-2);
+    font-family: Helvetica, Arial, sans-serif;
+}
+
 .bg-input {
     border-radius: 5px;
-    border:solid 1px grey;
+    border:solid 1px var(--bc-font-1);
     padding: 5px 10px;
 }
