@@ -1,0 +1,46 @@
+
+        header {
+            position:fixed;
+            top:0px;
+            left:0px;
+            right:0px;
+            height:40px;
+            background:  var(--bc-bg-1);
+            background: linear-gradient(180deg, var(--bc-bg-2) 98%, var(--bc-bg-4) 100%);
+            display:flex;
+            justify-content: space-between;
+        }
+
+        header nav {
+            display:flex;
+        }
+
+        header a {
+            text-decoration:none;
+        }
+
+        .header-separator {
+            height:40px;
+            width:100%;
+        }
+
+        .bl-input {
+            margin:5px;
+            border: solid 1px var(--bc-bg-3);
+            border-radius: 5px;
+            padding:5px 10px;
+            background: linear-gradient(180deg, var(--bc-bg-1) 98%, var(--bc-bg-4) 100%);
+        }
+
+        .bl-button:hover {
+            background: linear-gradient(180deg, var(--bc-bg-2) 50%, var(--bc-bg-3) 100%);
+            border: solid 1px var(--bc-bg-5);
+        }
+
+        .header-userbox-username {
+            margin:10px;
+        }
+
+        .header-userbox {
+            display:flex;
+        }

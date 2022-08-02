@@ -1,90 +1,37 @@
 {% block header %}
-    <style>
-        header {
-            position:fixed;
-            top:0px;
-            left:0px;
-            right:0px;
-            height:40px;
-            background:  var(--bc-bg-1);
-            background: linear-gradient(180deg, var(--bc-bg-2) 98%, var(--bc-bg-4) 100%);
-            display:flex;
-            justify-content: space-between;
-        }
-
-        header nav {
-            display:flex;
-        }
-
-        header a {
-            text-decoration:none;
-        }
-
-        .header-separator {
-            height:40px;
-            width:100%;
-        }
-
-        .header-link {
-            margin:5px;
-            border: solid 1px var(--bc-bg-3);
-            border-radius: 5px;
-            padding:5px 10px;
-            background: linear-gradient(180deg, var(--bc-bg-1) 98%, var(--bc-bg-4) 100%);
-        }
-
-        .header-link:hover {
-            background: linear-gradient(180deg, var(--bc-bg-2) 50%, var(--bc-bg-3) 100%);
-            border: solid 1px var(--bc-bg-5);
-        }
-
-        .header-userbox-username {
-            margin:10px;
-        }
-
-        .header-userbox {
-            display:flex;
-        }
-    </style>
     <header>
         <nav>
-            <a href="/">
-                <div class="header-link">
-                    Home
-                </div>
-            </a>
-            <a href="/user">
-                <div class="header-link">
-                    User
-                </div>
-            </a>
-            <a href="/client">
-                <div class="header-link">
-                    Client
-                </div>
-            </a>
-            <a href="/bill">
-                <div class="header-link">
-                    Bill
-                </div>
-            </a>
+            <bl-button
+                url="/"
+                title="Home"
+            ></bl-button>
+            <bl-button
+                url="/user"
+                title="User"
+            ></bl-button>
+            <bl-button
+                url="/client"
+                title="User"
+            ></bl-button>
+            <bl-button
+                url="/bill"
+                title="Bill"
+            ></bl-button>
         </nav>
         <div class="header-userbox">
             {% if app.user != null %}
             <span class="header-userbox-username">
                 {{ app.user.username }}
             </span>
-            <a href="/logout">
-                <div class="header-link">
-                    Logout
-                </div>
-            </a>
+            <bl-button
+                url="/logout"
+                title="Logout"
+            ></bl-button>
             {% else %}
-            <a href="/login">
-                <div class="header-link">
-                    Login
-                </div>
-            </a>
+            <bl-button
+                url="/login"
+                title="Login"
+            ></bl-button>
             {% endif %}
         </div>
     </header>

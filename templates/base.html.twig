@@ -13,7 +13,9 @@
         {% endblock %}
     </head>
     <body class="bc-light-theme">
-        {% include 'header.html.twig'  %}
-        {% block body %}{% endblock %}
+        <div id="app">
+            {% include 'header.html.twig'  %}
+            {% block body %}{% endblock %}
+        </div>
     </body>
 </html>

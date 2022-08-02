@@ -22,6 +22,10 @@ Encore
      */
     .addEntry('app', './assets/app.js')
 
+    .enableVueLoader(() => {}, {
+        useJsx: true
+    })
+
     // enables the Symfony UX Stimulus bridge (used in assets/bootstrap.js)
     .enableStimulusBridge('./assets/controllers.json')
 

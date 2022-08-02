@@ -11,3 +11,17 @@ import './styles/billing.css';
 
 // start the Stimulus application
 import './bootstrap';
+
+// Vue import
+import { createApp } from 'vue';
+
+// Vue componets
+import BlButton from './components/billing/button.vue';
+
+createApp({
+    delimiters: ['[[', ']]'],
+    components: {
+        BlButton
+    }
+})
+  .mount('#app')
